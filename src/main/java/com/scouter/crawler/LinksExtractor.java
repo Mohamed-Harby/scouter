@@ -16,5 +16,4 @@ public class LinksExtractor {
 
         return links;
     }
-
 }

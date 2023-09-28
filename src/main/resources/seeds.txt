@@ -1,4 +1,5 @@
-https://java.com/
-https://python.com/
-https://bealdung.com/
-1
+https://www.baeldung.com/
+https://www.javatpoint.com/java-tutorial
+https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html
+https://spring.io/
+https://howtodoinjava.com/

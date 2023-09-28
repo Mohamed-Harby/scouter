@@ -2,36 +2,31 @@ package com.scouter;
 
 import com.scouter.crawler.CrawlResult;
 import com.scouter.crawler.Crawler;
-import com.scouter.crawler.NaiveCrawler;
-import com.scouter.crawler.SimpleCrawler;
+import com.scouter.crawler.SeedsManager;
 
-import java.io.*;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashSet;
+
 
 public class Main {
 
     static List<String> seeds;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         seeds = new ArrayList<>();
-//        try (FileInputStream fileInputStream = new FileInputStream("src/main/resources/seeds.txt")) {
-//            BufferedInputStream inputStream = new BufferedInputStream(fileInputStream);
-//            var x = inputStream.readAllBytes();
-//            System.out.println(x);
-//        }
 
-        SimpleCrawler crawler = new SimpleCrawler();
-//        crawler.crawl("https://www.springcloud.io/post/2022-08/httpclient5/#gsc.tab=0");
+        Set<String> seeds = SeedsManager.getSeeds();
 
-//        crawler.crawl("123");
-        CrawlResult crawlResult = crawler.crawl("https://www.github.com/");
-        Set<CrawlResult> t = new HashSet<>();
-        t.add(crawlResult);
-        Set<CrawlResult> res = SimpleCrawler.breadthCrawl(t);
+        Set<CrawlResult> candidates = new HashSet<>();
+        for (String url : seeds) {
+            CrawlResult candidate = Crawler.crawl(url);
+            candidates.add(candidate);
+        }
 
-        System.out.println(res);
-
+        Crawler.breadthCrawl(candidates);
 
     }
 }
