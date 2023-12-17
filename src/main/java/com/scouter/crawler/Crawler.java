@@ -4,7 +4,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Set;
@@ -15,7 +14,7 @@ public class Crawler {
     private final HTMLFileSaver htmlFileSaver = new HTMLFileSaver();
     public CrawlResult crawl(String url) {
         try {
-            REPChecker repChecker = new REPChecker();
+            RobotsExclusionProtocolChecker repChecker = new RobotsExclusionProtocolChecker();
             if (!repChecker.isUrlAllowed(url)) {
                 return new CrawlResult(false, url, null, null);
             }
