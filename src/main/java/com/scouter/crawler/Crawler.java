@@ -10,12 +10,12 @@ import java.util.Set;
 public class Crawler {
 
     static final int MAX_NUMBER_OF_CANDIDATES = 30;
-
+    private final HTMLFileSaver htmlFileSaver = new HTMLFileSaver();
     public CrawlResult crawl(String url) {
         try {
             Document document = Jsoup.connect(url).get();
-            String htmlContent = document.outerHtml();
-            String filePath = HTMLFileSaver.save(htmlContent);
+
+            String filePath = htmlFileSaver.save(document);
             return new CrawlResult(true, url, document, filePath);
         } catch (Exception e) {
             // throw new RuntimeException(e);
