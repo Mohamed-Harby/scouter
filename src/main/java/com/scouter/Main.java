@@ -20,13 +20,13 @@ public class Main {
 
         Set<String> seeds = SeedsManager.getSeeds();
 
+        Crawler crawler = new Crawler();
         Set<CrawlResult> candidates = new HashSet<>();
         for (String url : seeds) {
-            CrawlResult candidate = Crawler.crawl(url);
+            CrawlResult candidate = crawler.crawl(url);
             candidates.add(candidate);
         }
 
-        Crawler.breadthCrawl(candidates);
-
+        crawler.breadthCrawl(candidates);
     }
 }

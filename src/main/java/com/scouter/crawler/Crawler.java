@@ -9,23 +9,22 @@ import java.util.Set;
 
 public class Crawler {
 
-    static final int MAX_NUMBER_OF_CANDIDATES = 5000;
+    static final int MAX_NUMBER_OF_CANDIDATES = 30;
 
-    public static CrawlResult crawl(String url) {
+    public CrawlResult crawl(String url) {
         try {
             Document document = Jsoup.connect(url).get();
             String htmlContent = document.outerHtml();
             String filePath = HTMLFileSaver.save(htmlContent);
             return new CrawlResult(true, url, document, filePath);
-
         } catch (Exception e) {
-//            throw new RuntimeException(e);
+            // throw new RuntimeException(e);
             return new CrawlResult(false, url, null, null);
         }
     }
 
 
-    public static void breadthCrawl(Set<CrawlResult> candidates) {
+    public void breadthCrawl(Set<CrawlResult> candidates) {
         Queue<CrawlResult> queue = new ArrayDeque<>(candidates);
         int cntOldSeeds = candidates.size();
 
@@ -33,18 +32,22 @@ public class Crawler {
         while (!queue.isEmpty() && candidates.size() < MAX_NUMBER_OF_CANDIDATES) {
             CrawlResult crawlResult = queue.poll();
 
-            if (!crawlResult.isSuccessful()) continue;
+            if (!crawlResult.successful()) continue;
 
-            Set<String> links = LinksExtractor.extract(crawlResult.getDocument());
+            Set<String> links = LinksExtractor.extract(crawlResult.document());
 
             for (String link : links) {
                 if (candidates.size() >= MAX_NUMBER_OF_CANDIDATES) break;
-                CrawlResult childCrawlResult = crawl(link);
+                CrawlResult childCrawlResult = this.crawl(link);
                 candidates.add(childCrawlResult);
                 queue.add(childCrawlResult);
             }
         }
         int cntNewCandidates = candidates.size() - cntOldSeeds;
         System.out.println("Crawled " + cntNewCandidates + " files successfully.");
+    }
+    
+    public void depthCrawl(CrawlResult rootCandidate) {
+        // TODO: Implement the code here.
     }
 }
