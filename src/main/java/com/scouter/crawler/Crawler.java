@@ -49,5 +49,6 @@ public class Crawler {
     
     public void depthCrawl(CrawlResult rootCandidate) {
         // TODO: Implement the code here.
+        //java starting
     }
 }
